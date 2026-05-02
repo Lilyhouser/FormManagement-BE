@@ -206,6 +206,221 @@
           }
         ]
       }
+    },
+    "/forms/{id}": {
+      "get": {
+        "tags": [
+          "Form"
+        ],
+        "summary": "Get a form by id",
+        "description": "Retrieve one form by MongoDB ObjectId. Draft forms are only accessible to admin users.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ObjectId of the form.",
+            "example": "66f2a8e9e8e7a9d7b4f9a123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Form"
+        ],
+        "summary": "Update form by admin",
+        "description": "Update an existing form by MongoDB ObjectId. Accepts any editable form fields in the request body.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ObjectId of the form to update.",
+            "example": "66f2a8e9e8e7a9d7b4f9a123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "Display title of the form.",
+                    "example": "Registration Form"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Short explanation of the form purpose.",
+                    "example": "Collects participant registration information."
+                  },
+                  "order": {
+                    "type": "number",
+                    "description": "Sort order used when listing forms.",
+                    "example": 1
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "Publication status of the form.",
+                    "example": "DRAFT"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Form"
+        ],
+        "summary": "Delete form by admin",
+        "description": "Delete an existing form by MongoDB ObjectId.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ObjectId of the form to delete.",
+            "example": "66f2a8e9e8e7a9d7b4f9a123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/forms/": {
+      "get": {
+        "tags": [
+          "Form"
+        ],
+        "summary": "Get all form by admin",
+        "description": "Retrieve all forms. This endpoint is restricted to admin users.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Form"
+        ],
+        "summary": "Add new form by admin",
+        "description": "Create a new form. Requires title, description, and order. If status is omitted, the form is created as draft.",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "description",
+                  "order"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "Display title of the form.",
+                    "example": "Registration Form"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Short explanation of the form purpose.",
+                    "example": "Collects participant registration information."
+                  },
+                  "order": {
+                    "type": "number",
+                    "description": "Sort order used when listing forms.",
+                    "example": 1
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "Optional publication status. Defaults to draft when omitted.",
+                    "example": "DRAFT"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {

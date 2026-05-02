@@ -1,3 +1,5 @@
+const { default: mongoose } = require("mongoose");
+
 const checkRequiredFields = (...fields) => {
   return (req, res, next) => {
     for (const field of fields) {
@@ -20,4 +22,13 @@ const checkRequiredFields = (...fields) => {
   };
 };
 
-module.exports = { checkRequiredFields };
+const checkValidObjectId = (req, res, next) => {
+  if (!mongoose.isValidObjectId(req.params.id)) {
+    return res.status(400).json({
+      message: "Id is invalid",
+    });
+  }
+  next();
+};
+
+module.exports = { checkRequiredFields, checkValidObjectId };
