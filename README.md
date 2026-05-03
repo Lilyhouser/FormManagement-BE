@@ -20,6 +20,8 @@ Clone project: [git clone https://github.com/Lilyhouser/FormManagement-BE.git]
 run [npm install] to install dependencies
 run [npm run dev] for development stage
 
+Backend must run at: http://localhost:3800
+
 # API Documentation
 
 Access the API documentation at [Swagger UI](http://localhost:3800/api-docs)
