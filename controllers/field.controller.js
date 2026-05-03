@@ -12,6 +12,7 @@ const addFieldToFormById = async (req, res) => {
     }
     const fieldArr = req.body.map((field) => ({
       ...field,
+      name: field.name || field.label.split(/\s+/).join("").toLowerCase(),
       formId: formResult.form._id,
     }));
     await Field.insertMany(fieldArr);

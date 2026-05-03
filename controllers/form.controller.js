@@ -35,6 +35,12 @@ const createNewForm = async (req, res) => {
         message: `Invalid Form Status. Please choose one of options: ${Object.values(FormStatus)}`,
       });
     }
+    const formSameOrder = await Form.findOne({ order });
+    if (formSameOrder) {
+      return res.status(400).json({
+        message: `The order ${order} is already taken!`,
+      });
+    }
     const newForm = await Form.create({
       title,
       description,
@@ -151,7 +157,7 @@ const submitForm = async (req, res) => {
           (field?.max && formData[field.name] > field.max)
         ) {
           return res.status(400).json({
-            message: `You must fill in the field ${field.label} with a number`,
+            message: `You must fill in the field ${field.label} with a number ${field?.min ? `at least ${field.min}` : ""} ${field?.max ? `at most ${field.max}` : ""}`,
           });
         }
       }

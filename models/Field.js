@@ -33,6 +33,12 @@ const FieldSchema = new Schema(
     options: {
       type: [String],
     },
+    min: {
+      type: Number,
+    },
+    max: {
+      type: Number,
+    },
   },
   { timestamps: true },
 );
