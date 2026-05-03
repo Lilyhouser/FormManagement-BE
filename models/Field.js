@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const FieldSchema = new Schema(
   {
-    formModelId: {
+    formId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Form",
     },
@@ -24,11 +24,10 @@ const FieldSchema = new Schema(
     },
     require: {
       type: Boolean,
-      require,
+      default: false,
     },
     options: {
       type: [String],
-      require,
     },
   },
   { timestamps: true },

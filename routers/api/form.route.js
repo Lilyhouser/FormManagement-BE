@@ -7,6 +7,7 @@ const {
   getFormById,
   updateFormById,
   deleteFormById,
+  getAllActiveForms,
 } = require("../../controllers/form.controller");
 const {
   checkRequiredFields,
@@ -14,7 +15,16 @@ const {
 } = require("../../middlewares");
 const router = express.Router();
 
-router.use("/:id", checkValidObjectId);
+router.get(
+  "/active",
+  // #swagger.tags = ['Form']
+  // #swagger.security = [{ "bearerAuth": [] }]
+  // #swagger.summary = 'Get all active forms'
+  // #swagger.description = 'Retrieve all active forms.'
+  getAllActiveForms,
+);
+
+router.use("/:id", checkValidObjectId("id"));
 router
   .route("/:id")
   .get(

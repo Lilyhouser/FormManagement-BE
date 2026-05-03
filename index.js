@@ -33,6 +33,7 @@ app.use("/auth", require("./routers/auth.route.js"));
 // verify jwt
 app.use(verifyJwt);
 app.use("/users", require("./routers/api/user.route.js"));
+app.use("/forms/:id/fields", require("./routers/api/field.route.js"));
 app.use("/forms", require("./routers/api/form.route.js"));
 
 app.use((req, res, next) => {

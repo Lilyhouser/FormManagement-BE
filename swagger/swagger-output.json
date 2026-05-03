@@ -207,6 +207,242 @@
         ]
       }
     },
+    "/forms/{id}/fields/": {
+      "post": {
+        "tags": [
+          "Field"
+        ],
+        "summary": "Add field to form",
+        "description": "Create a new field and attach it to the form identified by the form id in the URL.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ObjectId of the form that will receive the new field.",
+            "example": "66f2a8e9e8e7a9d7b4f9a123"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "type",
+                    "order",
+                    "label",
+                    "require"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "description": "Input type for the field.",
+                      "example": "text"
+                    },
+                    "placeholder": {
+                      "type": "string",
+                      "description": "Placeholder text displayed inside the input.",
+                      "example": "Enter your full name"
+                    },
+                    "order": {
+                      "type": "string",
+                      "description": "Sort order of the field inside the form.",
+                      "example": "1"
+                    },
+                    "label": {
+                      "type": "string",
+                      "description": "Display label shown to users.",
+                      "example": "Full name"
+                    },
+                    "require": {
+                      "type": "boolean",
+                      "description": "Whether users must provide a value for this field.",
+                      "example": true
+                    },
+                    "options": {
+                      "type": "array",
+                      "description": "Selectable options for choice-based field types.",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "Student",
+                        "Teacher",
+                        "Other"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/forms/{id}/fields/{fid}": {
+      "put": {
+        "tags": [
+          "Field"
+        ],
+        "summary": "Update field by id",
+        "description": "Update an existing field in a form. The form id and field id must both be valid MongoDB ObjectIds.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ObjectId of the form that owns the field.",
+            "example": "66f2a8e9e8e7a9d7b4f9a123"
+          },
+          {
+            "name": "fid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ObjectId of the field to update.",
+            "example": "66f2b2d3e8e7a9d7b4f9a456"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "Input type for the field.",
+                    "example": "select"
+                  },
+                  "placeholder": {
+                    "type": "string",
+                    "description": "Placeholder text displayed inside the input.",
+                    "example": "Choose your role"
+                  },
+                  "order": {
+                    "type": "string",
+                    "description": "Sort order of the field inside the form.",
+                    "example": "2"
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "Display label shown to users.",
+                    "example": "Role"
+                  },
+                  "require": {
+                    "type": "boolean",
+                    "description": "Whether users must provide a value for this field.",
+                    "example": false
+                  },
+                  "options": {
+                    "type": "array",
+                    "description": "Selectable options for choice-based field types.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "Student",
+                      "Teacher",
+                      "Other"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Field"
+        ],
+        "summary": "Delete field by id",
+        "description": "Delete an existing field from a form by form id and field id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ObjectId of the form that owns the field.",
+            "example": "66f2a8e9e8e7a9d7b4f9a123"
+          },
+          {
+            "name": "fid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ObjectId of the field to delete.",
+            "example": "66f2b2d3e8e7a9d7b4f9a456"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/forms/{id}": {
       "get": {
         "tags": [
@@ -230,11 +466,11 @@
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
-          },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
           }
         },
         "security": [
@@ -264,6 +500,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "401": {
             "description": "Unauthorized"
@@ -325,6 +564,28 @@
             "example": "66f2a8e9e8e7a9d7b4f9a123"
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/forms/active": {
+      "get": {
+        "tags": [
+          "Form"
+        ],
+        "summary": "Get all active forms",
+        "description": "Retrieve all active forms.",
         "responses": {
           "200": {
             "description": "OK"

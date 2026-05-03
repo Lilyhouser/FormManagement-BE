@@ -1,14 +1,25 @@
-const { success } = require("zod");
 const FormStatus = require("../constraints/formStatus");
 const { serverErrorMessageRes } = require("../helpers/serverErrorMessage");
 const Form = require("../models/Form");
-const { default: mongoose } = require("mongoose");
 const { ROLE } = require("../constraints/role");
 const { checkValidFormStatus } = require("../helpers/checkValidStatus");
+const Field = require("../models/Field");
 
 const getAllForms = async (req, res) => {
   try {
     const forms = await Form.find();
+    res.json(forms);
+  } catch (error) {
+    serverErrorMessageRes(res, error);
+  }
+};
+
+const getAllActiveForms = async (req, res) => {
+  try {
+    const forms = await Form.find({ status: FormStatus.ACTIVE })
+      .sort({ order: 1 })
+      .select("-createdAt -updatedAt -__v")
+      .lean();
     res.json(forms);
   } catch (error) {
     serverErrorMessageRes(res, error);
@@ -39,7 +50,7 @@ const createNewForm = async (req, res) => {
 const getFormById = async (req, res) => {
   try {
     const { id } = req.params;
-    const form = await Form.findById(id);
+    const form = await Form.findById(id).lean();
     if (!form) {
       return res
         .status(404)
@@ -50,7 +61,11 @@ const getFormById = async (req, res) => {
         message: "You are not allowed to access this data.",
       });
     }
-    res.status(200).json(form);
+
+    const fields = await Field.find({ formId: id }).select(
+      "-createdAt -updatedAt -__v -formId",
+    );
+    res.status(200).json({ ...form, fields });
   } catch (error) {
     serverErrorMessageRes(res, error);
   }
@@ -87,4 +102,5 @@ module.exports = {
   getFormById,
   updateFormById,
   deleteFormById,
+  getAllActiveForms,
 };

@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const SubmissionSchema = new Schema(
   {
-    formModelId: {
+    formId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Form",
     },

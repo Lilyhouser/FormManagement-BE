@@ -22,13 +22,17 @@ const checkRequiredFields = (...fields) => {
   };
 };
 
-const checkValidObjectId = (req, res, next) => {
-  if (!mongoose.isValidObjectId(req.params.id)) {
-    return res.status(400).json({
-      message: "Id is invalid",
-    });
-  }
-  next();
+const checkValidObjectId = (...params) => {
+  return (req, res, next) => {
+    for (let param of params) {
+      if (!mongoose.isValidObjectId(req.params[param])) {
+        return res.status(400).json({
+          message: `${param} is invalid`,
+        });
+      }
+    }
+    next();
+  };
 };
 
 module.exports = { checkRequiredFields, checkValidObjectId };
