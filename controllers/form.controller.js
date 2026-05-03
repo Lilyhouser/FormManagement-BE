@@ -5,6 +5,7 @@ const { ROLE } = require("../constraints/role");
 const { checkValidFormStatus } = require("../helpers/checkValidStatus");
 const Field = require("../models/Field");
 const Submission = require("../models/Submission");
+const { checkValidSubmitForm } = require("../helpers/formHelper");
 
 const getAllForms = async (req, res) => {
   try {
@@ -136,60 +137,18 @@ const submitForm = async (req, res) => {
     );
 
     const formData = req.body;
-    const mappedData = {};
 
-    for (let field of fields) {
-      if (field.require) {
-        if (!formData[field.name]) {
-          return res.status(400).json({
-            message: `You must fill in the field ${field.label}`,
-          });
-        }
-      }
-      if (field.type === "number") {
-        if (formData[field.name] && !Number.isInteger(formData[field.name])) {
-          return res.status(400).json({
-            message: `You must fill in the field ${field.label} with a number`,
-          });
-        }
-        if (
-          (field?.min && formData[field.name] < field.min) ||
-          (field?.max && formData[field.name] > field.max)
-        ) {
-          return res.status(400).json({
-            message: `You must fill in the field ${field.label} with a number ${field?.min ? `at least ${field.min}` : ""} ${field?.max ? `at most ${field.max}` : ""}`,
-          });
-        }
-      }
-      if (field.type === "text" || field.type === "textarea") {
-        if (formData[field.name] && formData[field.name].length < field.min) {
-          return res.status(400).json({
-            message: `You must fill in the field ${field.label} with at least ${field.min} characters`,
-          });
-        }
-        if (formData[field.name].length > field.max) {
-          return res.status(400).json({
-            message: `You must fill in the field ${field.label} with at most ${field.max} characters`,
-          });
-        }
-      }
-      if (field.type === "select") {
-        if (
-          formData[field.name] &&
-          !field.options.includes(formData[field.name])
-        ) {
-          return res.status(400).json({
-            message: `You must fill in the field ${field.label} with a valid option`,
-          });
-        }
-      }
-      mappedData[field.name] = formData[field.name];
+    const validResult = checkValidSubmitForm(formData, fields);
+    if (!validResult.valid) {
+      return res.status(400).json({
+        message: validResult.message,
+      });
     }
 
     const submission = await Submission.create({
       userId: req.userId,
       formId: id,
-      data: mappedData,
+      data: validResult.data,
     });
 
     res.status(201).json({
