@@ -1,8 +1,22 @@
 # Form Management BE
 
 This is the backend for Form Management project
+
 Language: NodeJS Express
+
 Database: MongoDB Atlas
+
+# Test account
+
+```
+# Admin
+userame: admin
+pass: admin
+
+# SW staff
+userame: staff
+pass: staff
+```
 
 # config .env file
 
