@@ -28,7 +28,7 @@ const getAllActiveForms = async (req, res) => {
 };
 const createNewForm = async (req, res) => {
   try {
-    const { title, description, order, status } = req.body;
+    let { title, description, order, status } = req.body;
     if (!status) status = FormStatus.DRAFT;
     if (!checkValidFormStatus(status)) {
       return res.status(400).json({
