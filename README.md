@@ -1,35 +1,25 @@
-# lovealarm-be
+# Form Management BE
 
-This is the backend for Love Alarm project
+This is the backend for Form Management project
+Language: NodeJS Express
+Database: MongoDB Atlas
 
 # config .env file
 
-Use website https://jwtsecrets.com/ to generate 2 random token with length = 256 bits for ACCESS_TOKEN_SECRET and REFRESH_TOKEN_SECRET
+Create file .env and add environment variables below
 
-Go to mongodb atlas, get CONNECTION_STRING and replace username and password with your own username and password
+```
+CONNECTION_STRING=mongodb+srv://houselily010_db_user:UZqLmpkplA7p2eoS@cluster0.jxllxd4.mongodb.net/?appName=Cluster0
+REFRESH_TOKEN_SECRET=9488db1fe52bc619d3da45c3ab6821ddb4a717c863c1514fd11cfa0d4d26e1f5
+ACCESS_TOKEN_SECRET=3901c619a6a0f6fbe3f5d7f8475ddf122be39c29c7eab5136ac027ac91e33889
+```
 
-## Firebase Admin credentials
+# Run project
 
-Do not hardcode a key file path in source code.
-
-Use one of these options:
-
-1. `FIREBASE_SERVICE_ACCOUNT_JSON` (recommended for deployment/secrets manager)
-2. `GOOGLE_APPLICATION_CREDENTIALS` (path to service account JSON file for local machine)
-
-Optional:
-
-- `FIREBASE_PROJECT_ID` (used as explicit fallback project id)
-
-Example `.env` values:
-
-- `FIREBASE_PROJECT_ID=love-alarm-c4454`
-- `FIREBASE_SERVICE_ACCOUNT_JSON={"type":"service_account",...}`
-
-# update swagger
-
-use command [npm run swagger] to update swagger after add, remove or update apis
-
-# On development stage
-
+Clone project: [git clone https://github.com/Lilyhouser/FormManagement-BE.git]
+run [npm install] to install dependencies
 run [npm run dev] for development stage
+
+# API Documentation
+
+Access the API documentation at [Swagger UI](http://localhost:3800/api-docs)
