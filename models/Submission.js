@@ -10,6 +10,10 @@ const SubmissionSchema = new Schema(
     data: {
       type: Object,
     },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   { timestamps: true },
 );

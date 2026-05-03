@@ -7,6 +7,10 @@ const FieldSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Form",
     },
+    name: {
+      type: String,
+      require,
+    },
     type: {
       type: String,
       require,

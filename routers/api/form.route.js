@@ -8,12 +8,51 @@ const {
   updateFormById,
   deleteFormById,
   getAllActiveForms,
+  submitForm,
 } = require("../../controllers/form.controller");
 const {
   checkRequiredFields,
   checkValidObjectId,
 } = require("../../middlewares");
 const router = express.Router();
+
+router.post(
+  "/:id/submit",
+  // #swagger.tags = ['Form']
+  // #swagger.security = [{ "bearerAuth": [] }]
+  // #swagger.summary = 'Submit a form'
+  // #swagger.description = 'Submit a form by MongoDB ObjectId. The user must be authenticated and the form must be active.'
+  /* #swagger.parameters['id'] = {
+    in: 'path',
+    required: true,
+    description: 'MongoDB ObjectId of the form to submit.',
+    type: 'string',
+    example: '66f2a8e9e8e7a9d7b4f9a123'
+  } */
+  /* #swagger.requestBody = {
+    required: true,
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            field1: {
+              type: 'string',
+              description: 'Value for the first field',
+              example: 'value1'
+            },
+            field2: {
+              type: 'number',
+              description: 'Value for the second field',
+              example: 42
+            }
+          }
+        }
+      }
+    }
+  } */
+  submitForm,
+);
 
 router.get(
   "/active",

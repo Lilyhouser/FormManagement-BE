@@ -443,6 +443,112 @@
         ]
       }
     },
+    "/submissions/": {
+      "get": {
+        "tags": [
+          "Submission"
+        ],
+        "summary": "Get all submissions",
+        "description": "Retrieve all submissions by MongoDB ObjectId. The user must be authenticated and the form must be active.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/forms/{id}/submit": {
+      "post": {
+        "tags": [
+          "Form"
+        ],
+        "summary": "Submit a form",
+        "description": "Submit a form by MongoDB ObjectId. The user must be authenticated and the form must be active.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "MongoDB ObjectId of the form to submit.",
+            "example": "66f2a8e9e8e7a9d7b4f9a123"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "field1": {
+                    "type": "string",
+                    "description": "Value for the first field",
+                    "example": "value1"
+                  },
+                  "field2": {
+                    "type": "number",
+                    "description": "Value for the second field",
+                    "example": 42
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/forms/active": {
+      "get": {
+        "tags": [
+          "Form"
+        ],
+        "summary": "Get all active forms",
+        "description": "Retrieve all active forms.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/forms/{id}": {
       "get": {
         "tags": [
@@ -506,6 +612,9 @@
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
           }
         },
         "security": [
@@ -570,28 +679,9 @@
           },
           "401": {
             "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "/forms/active": {
-      "get": {
-        "tags": [
-          "Form"
-        ],
-        "summary": "Get all active forms",
-        "description": "Retrieve all active forms.",
-        "responses": {
-          "200": {
-            "description": "OK"
           },
-          "401": {
-            "description": "Unauthorized"
+          "404": {
+            "description": "Not Found"
           }
         },
         "security": [
