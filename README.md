@@ -16,9 +16,16 @@ ACCESS_TOKEN_SECRET=3901c619a6a0f6fbe3f5d7f8475ddf122be39c29c7eab5136ac027ac91e3
 
 # Run project
 
-Clone project: [git clone https://github.com/Lilyhouser/FormManagement-BE.git]
-run [npm install] to install dependencies
-run [npm run dev] for development stage
+```
+# Clone project
+git clone https://github.com/Lilyhouser/FormManagement-BE.git
+
+# Install dependencies
+npm install
+
+# Run project
+npm run dev
+```
 
 Backend must run at: http://localhost:3800
 
